@@ -4,6 +4,8 @@ spring:
  application:
   name: KafkaUi
 server:
+ servlet:
+  context-path: 
  port: 5000
  devtools:
   restart:
