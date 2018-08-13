@@ -13,7 +13,12 @@ KAFKA_SECURITY_PROTOCOL
 Sasl-Mechanism "PLAIN" 
 Security-Protocal "SASL_SSL"
 
-
+# Docker image
+```
+docker pull baluvv/kafka-ui
+docker run -e  KAFKA_BOOTSTRAP_SERVERS='test1:9092,test2:9093,test3:9094' -e KAFKA_LOGIN_PASSWORD='mypassword' -e KAFKA_LOGIN_USER_NAME='myusername' -e KAFKA_SASL_MECHANISM='PLAIN' -e KAFKA_SECURITY_PROTOCOL='SASL_SSL' -p 5000:5000 kafka-ui:latest 
+```
+**Note:** make sure to pass necessary environment variables for docker run (not all 5 variables are mandatory)
 
 # Build from source for deployable Jar
 ```
