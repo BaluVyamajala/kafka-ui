@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row  mt-3">
+    <div class="col-md-12">
+      <form class="form-inline">
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="searchTopic" name="searchKey" placeholder="serach by topic">
+        <!-- <button class="btn btn-primary" (click)="getAllErrorEvents()">Fetch</button> -->
+      </form>
+    </div>
+  </div>
+
+  <div class="row pt-2">
+    <div class="col-6">
+      <table class="table">
+        <!-- <caption>List of Topics</caption> -->
+        <thead>
+          <tr>
+            <th scope="col-4">Topic</th>
+            <th scope="col-1">Total Partitions</th>
+          </tr>
+        </thead>
+      <tbody>
+          <tr *ngFor="let aTopic of topics | filter : searchTopic">
+            <td class="clickable border-0 selectedInGreen" [routerLink]="['/topicContent', aTopic.topic]">{{aTopic.topic}}</td>
+            <td class="border-0 text-center">{{aTopic.partitions.length }} </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="loadingTopics" class="row justify-content-center">
+            <fa name="cog" animation="spin" size="3x"></fa>
+      </div>
+    </div>
+  </div>
+</div>

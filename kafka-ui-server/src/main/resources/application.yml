@@ -1,0 +1,29 @@
+spring:
+ jackson:
+  joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss'Z'
+ application:
+  name: KafkaUi
+server:
+ port: 5000
+ devtools:
+  restart:
+   enabled: true
+  livereload:
+   enabled: false
+
+management:
+ endpoints:
+  web:
+   exposure:
+    include: 
+      - configprops
+      - health
+      - env     
+   
+consumer:
+ auto-offset-reset: earliest
+ enable-auto-commit: false		
+ session-timeout-ms: 30000
+ max-poll-records: 50
+ group-id: kafkaUiApplicationLocal
+ no-of-threads: 12

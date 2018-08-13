@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <div class="row">
+    <h3>{{topicName}}</h3>
+  </div>
+  <div class="row">
+    <!-- Earliest Offsets  -->
+    <div class="col-md-6">
+      <div class="row col-md-12">
+        <h4 class="center-block">Earliest Offsets by Partition</h4>
+      </div>
+      <div class="col-md-12">
+        <div *ngIf="loadingBeginningoffsets" class="row justify-content-center pl-5 border border-success">
+          <fa name="cog" animation="spin" size="3x"></fa>
+        </div>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-2 border border-success" *ngFor="let aPartition of begginingOffsets">
+          <span class="col-md-4">{{aPartition.partition | number:'2.0-0' }}</span>
+          <span class="col-md-6">{{aPartition.offset }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- Latest Offsets  -->
+    <div class="col-md-6">
+      <div class="row col-md-12">
+        <h4 class="center-block">Latest Offsets by Partition</h4>
+      </div>
+      <div *ngIf="loadingEndingoffsets" class="row justify-content-center border border-success col-md-12">
+        <fa name="cog" animation="spin" size="3x"></fa>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-2 border border-success" *ngFor="let aPartition of endingOffsets">
+          <span class="col-md-4">{{aPartition.partition | number:'2.0-0' }}</span>
+          <span class="col-md-6">{{aPartition.offset }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-2 pb-2 border-bottom border-dark my-3">
+    <!-- Input selection -->
+    <div class="col-md-6 justify-content-center align-self-center">
+      <div class="row col-md-12">
+        <h4 class="center-block">Selection Criteria</h4>
+      </div>
+      <form class="form-inline col-md-12" name="searchForm" #searchForm="ngForm">
+        <label class="sr-only" for="position">Position</label>
+        <select class="form-control mb-2 mr-sm-2 mb-sm-0 col-md-2" id="position" name="position" required [(ngModel)]="position"
+          (ngModelChange)="setPartitionOffsets()" [disabled]="loadingBeginningoffsets || loadingEndingoffsets || instanceInitializationInProgress">
+          <option *ngFor="let entry of positionArray" [ngValue]="entry">{{entry}}</option>
+        </select>
+
+        <label class="sr-only" for="noOfRecordsPerPartition">No of events Per Parition</label>
+        <input type="text" required class="form-control mb-2 mr-sm-2 mb-sm-0 col-md-2" id="noOfRecordsPerPartition" name="noOfRecordsPerPartition"
+          placeholder="number" [(ngModel)]="noOfRecordsPerPartition" (ngModelChange)="setPartitionOffsets()" placement="top"
+          ngbTooltip="No of records to fetch/searchIn per parition">
+
+        <label class="sr-only" for="searchKey">searchKey</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 col-md-2" id="searchKey" name="searchKey" placeholder="Key 2"
+          [(ngModel)]="searchKey">
+        <button type="submit" class="btn btn-success col-md-1" [disabled]="searchForm.form.invalid || instanceInitializationInProgress || fetchInProgress"
+          (click)="fetch()">Fetch</button>
+      </form>
+    </div>
+    <!-- Fetch From Offsets  -->
+    <div class="col-md-6" *ngIf="position==='OFFSET'">
+      <div class="row col-md-12">
+        <h4 class="center-block">Fetch From Offsets</h4>
+        <input type="text" required class="form-control mb-2 ml-sm-2 mr-sm-2 mb-sm-0 col-md-1" id="seekPartitionOffset" name="noOfRecordsPerPartition"
+        placeholder="number" [(ngModel)]="seekPartitionOffset" (ngModelChange)="setPartitionOffsets()" placement="top"
+        ngbTooltip="enter no to adjust offsets">
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-2 border border-success" *ngFor="let aPartition of fetchFromOffsets">
+          <span class="col-md-4">{{aPartition.partition | number:'2.0-0' }}</span>
+          <input class="col-md-6  border-0 py-0 mb-1 px-0 text-center" [(ngModel)]="aPartition.offset">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="partitionContentArray">
+    <h3> Topic Content</h3>
+    <div *ngIf="fetchInProgress" class="row justify-content-center col-md-12">
+      <fa name="cog" animation="spin" size="3x"></fa>
+    </div>
+    <div *ngFor="let aPartition of partitionContentArray">
+      <div *ngFor="let entry of aPartition.content.records; let i = index" class="border-1">
+        <h5 *ngIf="i == 0"> Partition: {{ aPartition.partition }}</h5>
+        <div class="row">
+        <div class="col-md-11">
+          <div class="border border-default maxHeight150 myScrool">
+            <ngx-json-viewer [json]="entry" [expanded]="false"></ngx-json-viewer>
+          </div>
+        </div>
+        <div class="col-md-1 align-self-center">
+          <button type="button" class="btn btn-success align-middle" (click)="openEventValueModel(entry)">ShowEvent</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

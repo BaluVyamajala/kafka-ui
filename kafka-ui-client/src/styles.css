@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+.clickable {
+  /* text-decoration: underline; */
+  cursor: pointer;
+  cursor: hand;
+}
+
+.borderClass {
+  border-style: none;
+}
+
+.borderClass:hover {
+  border-style: solid;
+}
+
+.selectedInGreen:hover {
+  background-color: #00800021;
+}
+
+/* ScroolBar */
+
+#myScrool::-webkit-scrollbar {
+  background: lightyellow;
+  width: 10px;
+}
+
+.myScrool::-webkit-scrollbar {
+  width: 6px;
+}
+
+.myScrool::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #f04f23;
+}
+
+.myScrool::-webkit-scrollbar-track {
+  background-color: #dedee0;
+}
