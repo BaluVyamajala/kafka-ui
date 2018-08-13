@@ -5,8 +5,8 @@ Create and Delete Topics
 View topic content from Begenning or from offset
 Search Topic content by Key
 
-# Apis for Create and Delete Topics
-create and delete Topic options are not provided on UI, you can call apis directly by pass topicName as queryParm.
+# Apis for Creating and Deleting Topics
+create and delete Topic options are not provided on UI, you can call apis directly by passing topicName as queryParm.
 ```
 POST http://localhost:5000/api/topic?topicName=My_Topic_Name
 DELETE http://localhost:5000/api/topic?topicName=My_Topic_Name
