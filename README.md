@@ -43,9 +43,11 @@ localhost:5000
 
 # Development 
 ```
-Server:
+Clone the code:
 git clone https://github.com/BaluVyamajala/kafka-ui.git
+Setup Server:
 import kafka-ui-server as maven project in to your editor(eclipse) and run KafkaUiStarter class as Java application.
+Setup Client: 
 import kafka-ui-client into your editor(visual studio code)
 npm install
 npm run-script start
