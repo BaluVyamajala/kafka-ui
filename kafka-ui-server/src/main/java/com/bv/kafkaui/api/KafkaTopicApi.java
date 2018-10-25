@@ -39,8 +39,8 @@ public class KafkaTopicApi {
 	}
 
 	@RequestMapping(path = "/api/topic", method = RequestMethod.POST)
-	public void createTopic(String topicName) {
-		topicHelper.createTopic(topicName);
+	public void createTopic(String topicName, @RequestParam(required=false) Integer partitions) {
+		topicHelper.createTopic(topicName, partitions);
 	}
 
 	@RequestMapping(path = "/api/topic", method = RequestMethod.DELETE)

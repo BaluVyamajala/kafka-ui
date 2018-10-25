@@ -61,9 +61,12 @@ public class TopicHelper {
 		return partitionOffsets;
 	}
 
-	public void createTopic(String topicName) {
+	public void createTopic(String topicName, Integer partitions) {
+		int numPartitions = 9;
+		if(partitions != null)
+			numPartitions = partitions.intValue();
 
-		NewTopic newTopic = new NewTopic(topicName, 9, (short) 3);
+		NewTopic newTopic = new NewTopic(topicName, numPartitions, (short) 3);
 		try {
 			final CreateTopicsResult createTopicsResult = client.createTopics(Collections.singletonList(newTopic));
 			 createTopicsResult.values().get(topicName).get();
