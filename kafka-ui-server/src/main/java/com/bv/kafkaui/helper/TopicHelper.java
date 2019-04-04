@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
+import org.apache.kafka.clients.admin.NewPartitions;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
@@ -75,7 +76,14 @@ public class TopicHelper {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
-
+	public void adddTopicPartitions(String topicName, Integer partitions) {
+		
+			int numPartitions = partitions.intValue();			
+			NewPartitions newPartitionRequest = NewPartitions.increaseTo(numPartitions);
+			client.createPartitions(Collections.singletonMap(topicName, newPartitionRequest));
+	}
+	
+	
 	public void deleteTopic(String topicName) {
 		NewTopic newTopic = new NewTopic(topicName, 12, (short) 3);
 		client.createTopics(Collections.singletonList(newTopic));

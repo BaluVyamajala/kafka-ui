@@ -43,6 +43,11 @@ public class KafkaTopicApi {
 		topicHelper.createTopic(topicName, partitions);
 	}
 
+	@RequestMapping(path = "/api/topic/alter", method = RequestMethod.POST)
+	public void alterTopic(String topicName, @RequestParam(required=true) Integer partitions) {
+		topicHelper.adddTopicPartitions(topicName, partitions);
+	}
+
 	@RequestMapping(path = "/api/topic", method = RequestMethod.DELETE)
 	public void deleteTopic(String topicName) {
 		topicHelper.deleteTopic(topicName);
