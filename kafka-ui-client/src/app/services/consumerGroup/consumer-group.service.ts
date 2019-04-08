@@ -19,7 +19,13 @@ export class ConsumerGroupService {
     public getConsumerGroup(topicName: string) {
         for (let element of this.consumerGroupArray) {
             if (element.topicName.match(topicName)) {
-                return element.consumerGroupName;
+                if (!element.consumerGroupName.startsWith('KafkaUI_')) {
+                    console.log('no it doesnt start' + element.consumerGroupName);
+                    this.consumerGroupArray = new Array();
+                    this.localSt.store(CONSUMER_GROUP_LOCAL_STORAGE_KEY, this.consumerGroupArray);
+                } else {
+                    return element.consumerGroupName;
+                }
             }
         }
         // Consumer Group not found in local storage - create one and store.
