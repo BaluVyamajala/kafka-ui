@@ -10,8 +10,10 @@ import { UUID } from 'angular2-uuid';
 export class ConsumerGroupService {
     consumerGroupArray: Array<ConsumerGroup> = new Array();
     constructor(private localSt: LocalStorageService) {
-        var localStrogeOut = this.localSt.retrieve(CONSUMER_GROUP_LOCAL_STORAGE_KEY);
-        if (localStrogeOut) this.consumerGroupArray = localStrogeOut;
+        const localStrogeOut = this.localSt.retrieve(CONSUMER_GROUP_LOCAL_STORAGE_KEY);
+        if (localStrogeOut) {
+            this.consumerGroupArray = localStrogeOut;
+        }
     }
 
     public getConsumerGroup(topicName: string) {
@@ -21,7 +23,7 @@ export class ConsumerGroupService {
             }
         }
         // Consumer Group not found in local storage - create one and store.
-        let consumerGroupName = topicName + '_' + UUID.UUID();
+        const consumerGroupName = 'KafkaUI_' + UUID.UUID();
         this.consumerGroupArray.push(new ConsumerGroup(topicName, consumerGroupName));
         this.saveToLocalStorage();
         return consumerGroupName;

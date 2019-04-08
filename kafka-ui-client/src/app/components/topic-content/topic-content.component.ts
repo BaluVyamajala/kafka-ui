@@ -31,15 +31,15 @@ export class TopicContentComponent implements OnInit, OnDestroy {
     fetchFromOffsets: Array<models.PartitionOffset> = new Array();
     loadingBeginningoffsets: boolean;
     loadingEndingoffsets: boolean;
-    instanceInitializationInProgress: boolean = true;
-    fetchInProgress: boolean = false;
+    instanceInitializationInProgress = true;
+    fetchInProgress = false;
     partitionEmptyOffsetArray: Array<models.PartitionOffset> = new Array();
 
     searchKey: string;
     positionArray: Array<string> = ['OFFSET', 'BEGINNING'];
-    position: string = 'BEGINNING';
-    noOfRecordsPerPartition: number = 2;
-    seekPartitionOffset: number = 10;
+    position = 'BEGINNING';
+    noOfRecordsPerPartition = 2;
+    seekPartitionOffset = 10;
     partitionContentArray: Array<models.PartitionContent>;
 
     ngOnInit() {

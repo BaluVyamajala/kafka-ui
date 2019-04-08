@@ -13,7 +13,6 @@ export class EventValueModelComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal) {}
 
     ngOnInit() {
-        //this.eventValue = JSON.parse(this.eventValueJson);
         this.eventValue = this.eventValueJson;
     }
 }
