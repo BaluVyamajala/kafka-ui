@@ -19,28 +19,28 @@ import { Ng2Webstorage } from 'ngx-webstorage';
 import { EventValueModelComponent } from './components/event-value-model/event-value-model.component';
 import { PrettyJsonModule } from 'angular2-prettyjson';
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    TopicsComponent,
-    TopicContentComponent,
-    FilterPipe,
-    EventValueModelComponent
-  ],  
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    HttpModule,
-    FormsModule,
-    PrettyJsonModule,
-    NgxJsonViewerModule,
-    NgbModule.forRoot(),
-    Ng2Webstorage,
-    AngularFontAwesomeModule
-  ],
-  providers: [TopicsService, ConsumerService, ConsumerGroupService],
-  entryComponents: [EventValueModelComponent],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        TopicsComponent,
+        TopicContentComponent,
+        FilterPipe,
+        EventValueModelComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        HttpModule,
+        FormsModule,
+        PrettyJsonModule,
+        NgxJsonViewerModule,
+        NgbModule.forRoot(),
+        Ng2Webstorage,
+        AngularFontAwesomeModule
+    ],
+    providers: [TopicsService, ConsumerService, ConsumerGroupService],
+    entryComponents: [EventValueModelComponent],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

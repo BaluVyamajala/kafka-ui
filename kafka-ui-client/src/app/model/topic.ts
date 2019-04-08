@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 export interface Topic {
     topic?: string;
     partitions?: Array<number>;

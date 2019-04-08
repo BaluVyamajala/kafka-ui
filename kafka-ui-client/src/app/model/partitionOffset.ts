@@ -10,15 +10,12 @@
  * Do not edit the class manually.
  */
 
-
 export class PartitionOffset {
     partition?: number;
     offset?: number;
-    public constructor(partition:number, offset?: number) {
+    public constructor(partition: number, offset?: number) {
         this.partition = partition;
-        if(offset != undefined)
-            this.offset = offset;
-        else
-            this.offset = 0;
+        if (offset != undefined) this.offset = offset;
+        else this.offset = 0;
     }
 }

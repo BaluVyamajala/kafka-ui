@@ -11,23 +11,20 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent } from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../encoder';
 
-import { Observable }                                        from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 import { PartitionOffset } from '../model/partitionOffset';
 import { Topic } from '../model/topic';
 import { UtilService } from '../services/util/util.service';
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
-
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 @Injectable()
 export class TopicsService {
-
     protected basePath = '/api';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
@@ -54,7 +51,6 @@ export class TopicsService {
         return false;
     }
 
-
     /**
      * Delete a topic
      * Delete a topic
@@ -65,12 +61,12 @@ export class TopicsService {
     public _delete(topicName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public _delete(topicName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public _delete(topicName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public _delete(topicName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public _delete(topicName: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
         if (topicName === null || topicName === undefined) {
             throw new Error('Required parameter topicName was null or undefined when calling _delete.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -78,27 +74,22 @@ export class TopicsService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+        let consumes: string[] = [];
 
-        return this.httpClient.delete<any>(`${this.basePath}/topic`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.delete<any>(`${this.basePath}/topic`, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -111,12 +102,12 @@ export class TopicsService {
     public create(topicName: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public create(topicName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public create(topicName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public create(topicName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public create(topicName: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
         if (topicName === null || topicName === undefined) {
             throw new Error('Required parameter topicName was null or undefined when calling create.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -124,28 +115,22 @@ export class TopicsService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+        let consumes: string[] = [];
 
-        return this.httpClient.post<any>(`${this.basePath}/topic`,
-            null,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<any>(`${this.basePath}/topic`, null, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -158,12 +143,12 @@ export class TopicsService {
     public get(topicName: string, observe?: 'body', reportProgress?: boolean): Observable<Topic>;
     public get(topicName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topic>>;
     public get(topicName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topic>>;
-    public get(topicName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public get(topicName: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
         if (topicName === null || topicName === undefined) {
             throw new Error('Required parameter topicName was null or undefined when calling get.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -171,27 +156,22 @@ export class TopicsService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+        let consumes: string[] = [];
 
-        return this.httpClient.get<Topic>(`${this.basePath}/topic`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.get<Topic>(`${this.basePath}/topic`, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -203,31 +183,25 @@ export class TopicsService {
     public getAll(observe?: 'body', reportProgress?: boolean): Observable<Array<Topic>>;
     public getAll(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Topic>>>;
     public getAll(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Topic>>>;
-    public getAll(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
+    public getAll(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+        let consumes: string[] = [];
 
-        return this.httpClient.get<Array<Topic>>(`${this.basePath}/topic/getAll`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.get<Array<Topic>>(`${this.basePath}/topic/getAll`, {
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -238,10 +212,30 @@ export class TopicsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOffsets(bgngOrEdng: string, topic: Topic, observe?: 'body', reportProgress?: boolean): Observable<Array<PartitionOffset>>;
-    public getOffsets(bgngOrEdng: string, topic: Topic, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<PartitionOffset>>>;
-    public getOffsets(bgngOrEdng: string, topic: Topic, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<PartitionOffset>>>;
-    public getOffsets(bgngOrEdng: string, topic: Topic, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOffsets(
+        bgngOrEdng: string,
+        topic: Topic,
+        observe?: 'body',
+        reportProgress?: boolean
+    ): Observable<Array<PartitionOffset>>;
+    public getOffsets(
+        bgngOrEdng: string,
+        topic: Topic,
+        observe?: 'response',
+        reportProgress?: boolean
+    ): Observable<HttpResponse<Array<PartitionOffset>>>;
+    public getOffsets(
+        bgngOrEdng: string,
+        topic: Topic,
+        observe?: 'events',
+        reportProgress?: boolean
+    ): Observable<HttpEvent<Array<PartitionOffset>>>;
+    public getOffsets(
+        bgngOrEdng: string,
+        topic: Topic,
+        observe: any = 'body',
+        reportProgress: boolean = false
+    ): Observable<any> {
         if (bgngOrEdng === null || bgngOrEdng === undefined) {
             throw new Error('Required parameter bgngOrEdng was null or undefined when calling getOffsets.');
         }
@@ -249,7 +243,7 @@ export class TopicsService {
             throw new Error('Required parameter topic was null or undefined when calling getOffsets.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (bgngOrEdng !== undefined) {
             queryParameters = queryParameters.set('bgngOrEdng', <any>bgngOrEdng);
         }
@@ -257,32 +251,25 @@ export class TopicsService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        let consumes: string[] = [];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<Array<PartitionOffset>>(`${this.basePath}/topic/offsets`,
-            topic,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<Array<PartitionOffset>>(`${this.basePath}/topic/offsets`, topic, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
-
 }

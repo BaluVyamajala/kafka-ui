@@ -11,7 +11,6 @@
  */
 import { Content } from './content';
 
-
 export interface PartitionContent {
     partition?: number;
     content?: Content;

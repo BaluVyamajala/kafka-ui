@@ -2,19 +2,18 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-event-value-model',
-  templateUrl: './event-value-model.component.html',
-  styleUrls: ['./event-value-model.component.css']
+    selector: 'app-event-value-model',
+    templateUrl: './event-value-model.component.html',
+    styleUrls: ['./event-value-model.component.css']
 })
 export class EventValueModelComponent implements OnInit {
-  @Input() eventValueJson;
+    @Input() eventValueJson;
 
-  public eventValue: JSON;
-  constructor(public activeModal: NgbActiveModal) { }
+    public eventValue: JSON;
+    constructor(public activeModal: NgbActiveModal) {}
 
-  ngOnInit() {
-    //this.eventValue = JSON.parse(this.eventValueJson); 
-    this.eventValue = this.eventValueJson;
-  }
-
+    ngOnInit() {
+        //this.eventValue = JSON.parse(this.eventValueJson);
+        this.eventValue = this.eventValueJson;
+    }
 }

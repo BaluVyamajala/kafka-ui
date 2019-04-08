@@ -1,4 +1,4 @@
-import { ConsumerGroupService } from "../../services/consumerGroup/consumer-group.service";
+import { ConsumerGroupService } from '../../services/consumerGroup/consumer-group.service';
 
 export class ConsumerGroup {
     topicName: string;

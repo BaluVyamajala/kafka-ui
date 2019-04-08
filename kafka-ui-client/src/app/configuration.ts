@@ -1,5 +1,5 @@
 export interface ConfigurationParameters {
-    apiKeys?: {[ key: string ]: string};
+    apiKeys?: { [key: string]: string };
     username?: string;
     password?: string;
     accessToken?: string | (() => string);
@@ -8,7 +8,7 @@ export interface ConfigurationParameters {
 }
 
 export class Configuration {
-    apiKeys?: {[ key: string ]: string};
+    apiKeys?: { [key: string]: string };
     username?: string;
     password?: string;
     accessToken?: string | (() => string);
@@ -31,7 +31,7 @@ export class Configuration {
      * @param {string[]} contentTypes - the array of content types that are available for selection
      * @returns {string} the selected content-type or <code>undefined</code> if no selection could be made.
      */
-    public selectHeaderContentType (contentTypes: string[]): string | undefined {
+    public selectHeaderContentType(contentTypes: string[]): string | undefined {
         if (contentTypes.length == 0) {
             return undefined;
         }
@@ -73,7 +73,7 @@ export class Configuration {
      * @return {boolean} True if the given MIME is JSON, false otherwise.
      */
     public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
+        const jsonMime: RegExp = new RegExp('^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
         return mime != null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
     }
 }

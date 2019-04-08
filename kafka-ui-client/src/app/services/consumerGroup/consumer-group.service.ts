@@ -4,34 +4,30 @@ import { ConsumerGroup } from '../../model/helper/consumerGroup';
 import { CONSUMER_GROUP_LOCAL_STORAGE_KEY } from '../../variables';
 import { UUID } from 'angular2-uuid';
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-
 @Injectable()
 export class ConsumerGroupService {
-
-  consumerGroupArray: Array<ConsumerGroup> = new Array();
-  constructor(private localSt: LocalStorageService) {
-    var localStrogeOut = this.localSt.retrieve(CONSUMER_GROUP_LOCAL_STORAGE_KEY);
-    if(localStrogeOut)
-      this.consumerGroupArray  = localStrogeOut;
-  }
-
-
-  public getConsumerGroup(topicName: string) {
-    for( let element of this.consumerGroupArray){
-      if (element.topicName.match(topicName)){
-        return element.consumerGroupName;
-      }
+    consumerGroupArray: Array<ConsumerGroup> = new Array();
+    constructor(private localSt: LocalStorageService) {
+        var localStrogeOut = this.localSt.retrieve(CONSUMER_GROUP_LOCAL_STORAGE_KEY);
+        if (localStrogeOut) this.consumerGroupArray = localStrogeOut;
     }
-    // Consumer Group not found in local storage - create one and store.
-    let consumerGroupName = topicName + "_" + UUID.UUID();
-    this.consumerGroupArray.push(new ConsumerGroup(topicName, consumerGroupName));
-    this.saveToLocalStorage();
-    return consumerGroupName;
-  }
 
-  private saveToLocalStorage() {
-    this.localSt.store(CONSUMER_GROUP_LOCAL_STORAGE_KEY, this.consumerGroupArray);
-  }
+    public getConsumerGroup(topicName: string) {
+        for (let element of this.consumerGroupArray) {
+            if (element.topicName.match(topicName)) {
+                return element.consumerGroupName;
+            }
+        }
+        // Consumer Group not found in local storage - create one and store.
+        let consumerGroupName = topicName + '_' + UUID.UUID();
+        this.consumerGroupArray.push(new ConsumerGroup(topicName, consumerGroupName));
+        this.saveToLocalStorage();
+        return consumerGroupName;
+    }
+
+    private saveToLocalStorage() {
+        this.localSt.store(CONSUMER_GROUP_LOCAL_STORAGE_KEY, this.consumerGroupArray);
+    }
 }

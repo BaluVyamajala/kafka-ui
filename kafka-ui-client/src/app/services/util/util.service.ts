@@ -3,15 +3,13 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 
 @Injectable()
 export class UtilService {
+    private static baseUrl: string;
+    private location: Location;
 
-  private static baseUrl: string;
-  private location: Location;
+    constructor() {}
 
-  constructor() { }
-
-  public static getBaseUrl() {   
-    UtilService.baseUrl = location.origin;
-    return UtilService.baseUrl;
-  }
-
+    public static getBaseUrl() {
+        UtilService.baseUrl = location.origin;
+        return UtilService.baseUrl;
+    }
 }

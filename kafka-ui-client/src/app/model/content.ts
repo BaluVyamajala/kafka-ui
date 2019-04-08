@@ -11,7 +11,6 @@
  */
 import { Record } from './record';
 
-
 export interface Content {
     records?: Array<Record>;
 }

@@ -11,23 +11,21 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent } from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../encoder';
 
-import { Observable }                                        from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 
 import { PartitionContent } from '../model/partitionContent';
 import { PartitionOffset } from '../model/partitionOffset';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
-import { UtilService }  from '../services/util/util.service';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
+import { UtilService } from '../services/util/util.service';
 
 @Injectable()
 export class ConsumerService {
-
     protected basePath = '/api';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
@@ -54,7 +52,6 @@ export class ConsumerService {
         return false;
     }
 
-
     /**
      * Fetch Data from topic
      * consume data from Topic
@@ -67,10 +64,46 @@ export class ConsumerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public consumeFromTopic(topicName: string, consumerGroup: string, position: string, partitionOffset: Array<PartitionOffset>, noOfRecordsPerPartition?: number, searchKeys?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<PartitionContent>>;
-    public consumeFromTopic(topicName: string, consumerGroup: string, position: string, partitionOffset: Array<PartitionOffset>, noOfRecordsPerPartition?: number, searchKeys?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<PartitionContent>>>;
-    public consumeFromTopic(topicName: string, consumerGroup: string, position: string, partitionOffset: Array<PartitionOffset>, noOfRecordsPerPartition?: number, searchKeys?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<PartitionContent>>>;
-    public consumeFromTopic(topicName: string, consumerGroup: string, position: string, partitionOffset: Array<PartitionOffset>, noOfRecordsPerPartition?: number, searchKeys?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public consumeFromTopic(
+        topicName: string,
+        consumerGroup: string,
+        position: string,
+        partitionOffset: Array<PartitionOffset>,
+        noOfRecordsPerPartition?: number,
+        searchKeys?: string,
+        observe?: 'body',
+        reportProgress?: boolean
+    ): Observable<Array<PartitionContent>>;
+    public consumeFromTopic(
+        topicName: string,
+        consumerGroup: string,
+        position: string,
+        partitionOffset: Array<PartitionOffset>,
+        noOfRecordsPerPartition?: number,
+        searchKeys?: string,
+        observe?: 'response',
+        reportProgress?: boolean
+    ): Observable<HttpResponse<Array<PartitionContent>>>;
+    public consumeFromTopic(
+        topicName: string,
+        consumerGroup: string,
+        position: string,
+        partitionOffset: Array<PartitionOffset>,
+        noOfRecordsPerPartition?: number,
+        searchKeys?: string,
+        observe?: 'events',
+        reportProgress?: boolean
+    ): Observable<HttpEvent<Array<PartitionContent>>>;
+    public consumeFromTopic(
+        topicName: string,
+        consumerGroup: string,
+        position: string,
+        partitionOffset: Array<PartitionOffset>,
+        noOfRecordsPerPartition?: number,
+        searchKeys?: string,
+        observe: any = 'body',
+        reportProgress: boolean = false
+    ): Observable<any> {
         if (topicName === null || topicName === undefined) {
             throw new Error('Required parameter topicName was null or undefined when calling consumeFromTopic.');
         }
@@ -84,7 +117,7 @@ export class ConsumerService {
             throw new Error('Required parameter partitionOffset was null or undefined when calling consumeFromTopic.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -104,31 +137,26 @@ export class ConsumerService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
+        let httpHeaderAccepts: string[] = [];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        let consumes: string[] = [];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<Array<PartitionContent>>(`${this.basePath}/consumer/fetch`,
-            partitionOffset,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<Array<PartitionContent>>(`${this.basePath}/consumer/fetch`, partitionOffset, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -140,21 +168,51 @@ export class ConsumerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public initializeConsumerInstance(topicName: string, consumerGroup: string, partitionOffset: Array<PartitionOffset>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public initializeConsumerInstance(topicName: string, consumerGroup: string, partitionOffset: Array<PartitionOffset>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public initializeConsumerInstance(topicName: string, consumerGroup: string, partitionOffset: Array<PartitionOffset>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public initializeConsumerInstance(topicName: string, consumerGroup: string, partitionOffset: Array<PartitionOffset>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public initializeConsumerInstance(
+        topicName: string,
+        consumerGroup: string,
+        partitionOffset: Array<PartitionOffset>,
+        observe?: 'body',
+        reportProgress?: boolean
+    ): Observable<any>;
+    public initializeConsumerInstance(
+        topicName: string,
+        consumerGroup: string,
+        partitionOffset: Array<PartitionOffset>,
+        observe?: 'response',
+        reportProgress?: boolean
+    ): Observable<HttpResponse<any>>;
+    public initializeConsumerInstance(
+        topicName: string,
+        consumerGroup: string,
+        partitionOffset: Array<PartitionOffset>,
+        observe?: 'events',
+        reportProgress?: boolean
+    ): Observable<HttpEvent<any>>;
+    public initializeConsumerInstance(
+        topicName: string,
+        consumerGroup: string,
+        partitionOffset: Array<PartitionOffset>,
+        observe: any = 'body',
+        reportProgress: boolean = false
+    ): Observable<any> {
         if (topicName === null || topicName === undefined) {
-            throw new Error('Required parameter topicName was null or undefined when calling initializeConsumerInstance.');
+            throw new Error(
+                'Required parameter topicName was null or undefined when calling initializeConsumerInstance.'
+            );
         }
         if (consumerGroup === null || consumerGroup === undefined) {
-            throw new Error('Required parameter consumerGroup was null or undefined when calling initializeConsumerInstance.');
+            throw new Error(
+                'Required parameter consumerGroup was null or undefined when calling initializeConsumerInstance.'
+            );
         }
         if (partitionOffset === null || partitionOffset === undefined) {
-            throw new Error('Required parameter partitionOffset was null or undefined when calling initializeConsumerInstance.');
+            throw new Error(
+                'Required parameter partitionOffset was null or undefined when calling initializeConsumerInstance.'
+            );
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -165,32 +223,26 @@ export class ConsumerService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        let consumes: string[] = [];
+        let httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/consumer/init`,
-            partitionOffset,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<any>(`${this.basePath}/consumer/init`, partitionOffset, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
 
     /**
@@ -201,10 +253,30 @@ export class ConsumerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public keepAlive(topicName: string, consumerGroup: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public keepAlive(topicName: string, consumerGroup: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public keepAlive(topicName: string, consumerGroup: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public keepAlive(topicName: string, consumerGroup: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public keepAlive(
+        topicName: string,
+        consumerGroup: string,
+        observe?: 'body',
+        reportProgress?: boolean
+    ): Observable<any>;
+    public keepAlive(
+        topicName: string,
+        consumerGroup: string,
+        observe?: 'response',
+        reportProgress?: boolean
+    ): Observable<HttpResponse<any>>;
+    public keepAlive(
+        topicName: string,
+        consumerGroup: string,
+        observe?: 'events',
+        reportProgress?: boolean
+    ): Observable<HttpEvent<any>>;
+    public keepAlive(
+        topicName: string,
+        consumerGroup: string,
+        observe: any = 'body',
+        reportProgress: boolean = false
+    ): Observable<any> {
         if (topicName === null || topicName === undefined) {
             throw new Error('Required parameter topicName was null or undefined when calling keepAlive.');
         }
@@ -212,7 +284,7 @@ export class ConsumerService {
             throw new Error('Required parameter consumerGroup was null or undefined when calling keepAlive.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (topicName !== undefined) {
             queryParameters = queryParameters.set('topicName', <any>topicName);
         }
@@ -223,28 +295,21 @@ export class ConsumerService {
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
+        let httpHeaderAccepts: string[] = ['application/json'];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
-        ];
+        let consumes: string[] = [];
 
-        return this.httpClient.post<any>(`${this.basePath}/consumer/keepAlive`,
-            null,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
+        return this.httpClient.post<any>(`${this.basePath}/consumer/keepAlive`, null, {
+            params: queryParameters,
+            withCredentials: this.configuration.withCredentials,
+            headers: headers,
+            observe: observe,
+            reportProgress: reportProgress
+        });
     }
-
 }
