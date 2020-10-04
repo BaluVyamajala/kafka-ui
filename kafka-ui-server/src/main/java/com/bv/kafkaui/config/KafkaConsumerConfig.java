@@ -92,10 +92,19 @@ public class KafkaConsumerConfig {
 
 		if (saslMechanism != null)
 			props.put("sasl.mechanism", saslMechanism);
+		
+		
 
-		if (loginUserName != null && loginPassword != null)
-			props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username=\""
-					+ loginUserName + "\" password=\"" + loginPassword + "\";");
+		if (loginUserName != null && loginPassword != null) {
+			
+			String jassModule =  "org.apache.kafka.common.security.plain.PlainLoginModule";
+			if(saslMechanism!= null && saslMechanism.equals("SCRAM-SHA-256")) {
+				jassModule = "org.apache.kafka.common.security.scram.ScramLoginModule";
+			}
+			
+			props.put("sasl.jaas.config", jassModule + " required username=\""
+					+ loginUserName + "\" password=\"" + loginPassword + "\";");			
+		}
 
 		return props;
 	}
